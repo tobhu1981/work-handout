@@ -8,8 +8,8 @@ project:
 
 website:
   site-url: https://tobhu1981.github.io/tba-info-preversion/
-  title: "TBA - Verstehen und Anwenden"
-  description: "Dokumentation der IQB-Webanwendungen zum computerbasierten Testen - TBA"
+  title: "Wiki Arbeit"
+  description: "Wissenswertes"
   favicon: assets/favicon.ico
   back-to-top-navigation: true
   page-navigation: true
@@ -43,6 +43,7 @@ website:
         href: cypress/index.qmd
         contents:
           - href: cypress/lesbarkeit.qmd
+          - href: cypress/examples.qmd
 format:
   html:
     theme: 

@@ -1,0 +1,24 @@
+---
+lang: de
+title: "Anwendungsbeispiele"
+---
+
+## Conditional Testing
+
+```javascript
+ cy.get('[data-cy="dialog-cancel"]')
+      .should('not.exist').then(() => {
+        cy.get('[data-cy="dialog-confirm"]')
+          .should('not.exist');
+      });
+```
+
+## About blank
+
+```javascript
+afterEach(() => {
+    cy.window().then((win) => {
+      win.location.href = 'about:blank'
+    });
+  });
+```
