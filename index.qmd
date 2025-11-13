@@ -1,0 +1,9 @@
+---
+lang: de
+title: "Wiki Arbeit"
+format:
+    html:
+        toc: false
+        page-layout: full
+---
+

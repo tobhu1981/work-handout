@@ -1,0 +1,63 @@
+---
+lang: de
+title: "Lesbarkeit Testcode"
+---
+
+# Cypress: Button in spezifischem Dialog anklicken
+
+## Problem
+Wenn du einen Button in einem bestimmten Dialog anklicken möchtest, kannst du **nicht** einfach `.get()` in der Kette verwenden:
+
+```javascript
+// ❌ FUNKTIONIERT NICHT
+cy.get('[data-cy="dialog-title"]')
+  .contains('Aufgabenabschnitt verlassen?')
+  .get('[data-cy="dialog-confirm"]')  // .get() sucht im gesamten DOM!
+  .click();
+```
+
+## Grund
+- `.get()` sucht **immer im gesamten DOM** und ignoriert die vorherige Selektion
+- `.find()` sucht **innerhalb des aktuellen Elements**
+
+## Lösungen
+
+### Option 1: `.within()` (beste Lesbarkeit)
+```javascript
+cy.get('[data-cy="dialog-title"]')
+  .contains('Aufgabenabschnitt verlassen?')
+  .closest('[role="dialog"]')
+  .within(() => {
+    cy.get('[data-cy="dialog-confirm"]').click();
+  });
+```
+
+### Option 2: `.closest()` + `.find()`
+```javascript
+cy.get('[data-cy="dialog-title"]')
+  .contains('Aufgabenabschnitt verlassen?')
+  .closest('[role="dialog"]')
+  .find('[data-cy="dialog-confirm"]')
+  .click();
+```
+
+### Option 3: Direkter Ansatz
+```javascript
+cy.contains('[data-cy="dialog-title"]', 'Aufgabenabschnitt verlassen?')
+  .closest('[role="dialog"]')
+  .find('[data-cy="dialog-confirm"]')
+  .click();
+```
+
+## Wichtige Befehle
+
+| Befehl | Suchbereich |
+|--------|-------------|
+| `.get()` | Gesamtes DOM |
+| `.find()` | Innerhalb des aktuellen Elements |
+| `.within()` | Etabliert Scope für mehrere Befehle |
+| `.closest()` | Sucht aufwärts zum nächsten passenden Eltern-Element |
+| `.parent()` | Ein Level nach oben im DOM |
+
+## Tipp
+Ersetze `[role="dialog"]` durch den passenden Selektor für deinen Dialog-Container (z.B. `.dialog`, `[data-cy="dialog"]`, etc.).
