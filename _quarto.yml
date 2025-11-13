@@ -59,6 +59,7 @@ website:
       - href: linux/index.qmd
       - href: testcenter/index.qmd
       - href: to-do/index.qmd
+      - href: iqb/index.qmd
 
 format:
   html:

@@ -1,0 +1,14 @@
+---
+lang: de
+title: "IQB-Zeugs"
+lightbox:
+  match: auto
+  effect: fade
+  desc-position: right
+  loop: false
+  css-class: "my-css-class"
+---
+
+# Organigramm
+
+![](organigramm.png)

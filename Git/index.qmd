@@ -19,3 +19,33 @@ lightbox:
 ![](assets/Git-2.png){group="my-gallery"}
 
 ![](assets/Git-3.png){group="my-gallery"}
+
+
+## Leerzeile am Dateiende
+
+Habe dazu folgendes im Netz gefunden:
+
+GCC (and many C/C++ compilers/tools) warns when a source file does not end with a newline because the C standard and many text-processing tools treat source files as sequences of lines that each end with a newline character. The warning is a consequence of three practical and historical reasons:
+
+Language grammar and standards
+- The C standard defines a source file as a sequence of lines, each ending in a newline character. Some lexical rules (for example, how the preprocessor concatenates lines with backslash-newline, or how tokens are recognized) assume that the final line also terminates with a newline.
+- Absence of a terminating newline makes the last line a partial line by that definition, which is technically nonconforming and can alter preprocessing/tokenization behavior in edge cases.
+Portability and toolchain expectations
+- Many UNIX tools (diff, patch, compilers, editors, version control systems) expect newline-terminated lines. Tools may display warnings like “No newline at end of file” because some operations (patch generation, concatenation) can behave unexpectedly without the final newline.
+- Version-control diffs become noisier or confusing when some files lack the final newline, making patches harder to read or apply.
+Practical parsing and concatenation issues
+- When two files are concatenated (or when header files are included) without a trailing newline, the last token of the first file can be stuck to the first token of the next file, producing valid-but-different tokens (or syntax errors).
+- Macros and line-splicing that rely on backslash-newline at the end of a line can misbehave if the termination is missing.
+
+What the warning means in practice
+
+It is usually harmless for well-formed code but points to a nonconforming edge case and a potential source of subtle bugs or toolchain friction.
+Fixing it is trivial: add a single newline character at the end of the file. Most editors have a setting to ensure files are saved with a trailing newline automatically.
+
+When it matters
+
+Critical when generating code, writing tools that concatenate files, creating patches, or aiming for strict standards conformance.
+Less critical for immediate compilation of small programs, but useful as a hygiene rule for collaborative projects and portable code.
+
+Summary
+GCC warns to encourage standards-conforming, tool-friendly files: ending every source file with a newline prevents subtle tokenization, preprocessing, and tooling problems and keeps diffs and patches clean.
