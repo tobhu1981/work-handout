@@ -6,6 +6,13 @@ format:
     toc: false
 
 ---
+# Commits squashen
+
+```bash
+git checkout feature2
+git merge --squash feature1
+git commit -m "Feature 1 integriert"
+```
 
 # Commit-Message ändern
 
