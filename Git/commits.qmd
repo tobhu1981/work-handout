@@ -6,6 +6,14 @@ format:
     toc: false
 
 ---
+
+# Commit rückgängig machen
+
+Um den letzten Commit auf einem Remote-Repository rückgängig zu machen, verwenden Sie
+git revert <Commit-Hash>. Dies erstellt einen neuen Commit, der die Änderungen des alten Commits rückgängig macht, anstatt den Verlauf zu überschreiben. 
+
+Wenn Sie jedoch den Verlauf überschreiben möchten (was für entfernte Commits riskant sein kann), können Sie git reset --hard HEAD~1 verwenden, um den letzten lokalen Commit zu löschen, und dann mit git push --force den Remote-Branch aktualisieren. 
+
 # Commits squashen
 
 ```bash
