@@ -22,3 +22,44 @@ afterEach(() => {
     });
   });
 ```
+
+## API Request mit Wertspeicherung
+
+```javascript
+export const simulateTesttakerLoginForGroupmon = () => {
+  // Request 1: Anmeldung und Token speichern
+  cy.request({
+    method: 'PUT',
+    url: 'http://localhost/api/session/login',
+    headers: {
+      'content-type': `application/json`,
+      'Accept': `text/csv`
+    },
+    body: {
+      "name": "test",
+      "password": "user123"
+    }
+  }).then((response) => {
+    const authToken = response.body.token;
+    expect(response.status).to.eq(200);
+
+    cy.wait(2000);  // oder cy.wait(500) für 500ms
+
+    // Request 2: Code eingeben
+    cy.request({
+      method: 'PUT',
+      url: 'http://localhost/api/session/person',
+      headers: {
+        'content-type': `application/json`,
+        'Accept': `text/csv`,
+        'AuthToken': `${authToken}`
+      },
+      body: {
+        "code": "yyy"
+      }
+    }).then((response) => {
+     // Cypress.env('authTokenPers', response.body.token);
+      expect(response.status).to.eq(200);
+    });
+  });
+  ```
