@@ -9,6 +9,10 @@ title: "Befehle"
 
 `git reset --soft HEAD~1`
 
+Anschließend wenn bereits Remote war:
+
+`git push --force-with-lease`
+
 ### einzelnen Commit einbinden
 
 `git cherry-pick commitnumber`
